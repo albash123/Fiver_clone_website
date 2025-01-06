@@ -1,0 +1,74 @@
+.black-50 {
+    background-color: rgba(0, 0, 0, 0.5) !important;
+}
+
+.object-cover {
+    object-fit: cover !important;
+}
+
+.object-contain {
+    object-fit: contain !important;
+}
+
+.text-sm {
+    font-size: 0.8rem !important;
+}
+
+.text-md {
+    font-size: 0.9rem !important;
+}
+
+.transition-slow {
+    transition: all 2s !important;
+}
+
+.transition-md {
+    transition: all 2s !important;
+}
+
+.transition-fast {
+    transition: all 2s !important;
+}
+.height-full {
+    height: 100vh !important;
+}
+
+.clip-circle {
+    clip-path: circle() !important;
+}
+.y-scroll {
+    overflow: scroll !important;
+}
+.translate-nx-100 {
+    transform: translateX(-100%);
+}
+.translate-px-100 {
+    transform: translateX(100%);
+}
+.cursor-pointer {
+    cursor: pointer !important;
+}
+.scale-0 {
+    scale: 0;
+}
+.dsiplay-none {
+    display: none;
+}
+.hero {
+    background-position: center center;
+    background-size: cover;
+    background-image: url("https://plus.unsplash.com/premium_photo-1685656440548-d8cad874d5d8?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cGF0dGVybiUyMHdhbGxwYXBlcnxlbnwwfHwwfHx8MA%3D%3D");
+}
+.active {
+    position: relative;
+    color: black !important;
+}
+.active::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background-color: black;
+    bottom: -5px;
+    left: 0;
+}
