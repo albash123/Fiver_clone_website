@@ -1,5 +1,6 @@
 <x-layout>
     <x-nav />
+    <
 
 
     <div class="container-fluid py-4 bg-light">
@@ -116,7 +117,7 @@
                                 online. Feel free to co
                             </p>
                             <hr>
-                            
+
 
                             <div class="d-flex justify-content-between">
                                 <h5>Languges</h5>
@@ -125,7 +126,8 @@
                                 </p>
                             </div>
 
-                            <form action="" class="language  p-3 border rounded-2 d-none" style="background: #bbbfbd">
+                            <form action="" class="language  p-3 border rounded-2 d-none"
+                                style="background: #bbbfbd">
                                 <input type="text" placeholder="Add language" class="form-control my-1">
                                 <div class="form-control my-1">
                                     <select name="language_level" class="form-control" id="language-level">
@@ -142,7 +144,8 @@
                                         <button type="button" class="btn cancel-lang w-100 btn-outline-dark">
                                             Cancel
                                         </button>
-                                        <button type="submit" class="btn w-100 btn-success" disabled style="cursor: pointer">
+                                        <button type="submit" class="btn w-100 btn-success" disabled
+                                            style="cursor: pointer">
                                             Add
                                         </button>
                                     </div>
