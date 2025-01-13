@@ -120,9 +120,6 @@
             border: 1px solid rgba(228, 229, 231, 0.6);
         }
     </style>
-    <pre>
-        {{ $categories }}
-    </pre>
 
 
     <div class="container-fluid ">
@@ -150,20 +147,21 @@
 
                             <div class="mb-4 ">
                                 <label class="form-label">Platform Type</label>
-                                <div class="platform-type p-4">
+                                {{-- <div class="platform-type p-4">
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="facebook" checked>
+                                        <input class="form-check-input" type="checkbox" id="facebook">
                                         <label class="form-check-label" for="facebook">Facebook</label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="instagram" checked>
+                                        <input class="form-check-input" type="checkbox" id="instagram">
                                         <label class="form-check-label" for="instagram">Instagram</label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="linkedin" checked>
+                                        <input class="form-check-input" type="checkbox" id="linkedin">
                                         <label class="form-check-label" for="linkedin">LinkedIn</label>
                                     </div>
-                                </div>
+
+                                </div> --}}
                             </div>
 
                             <div class="mb-4">
@@ -242,4 +240,9 @@
 
         </div>
     </div>
+
+    <script>
+      
+    </script>
+
 </x-layout>

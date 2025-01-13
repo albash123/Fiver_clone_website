@@ -14,4 +14,6 @@ Route::prefix('seller')->group(function () {
     //get routes
 
     Route::get('/create-gig', [Gigcontroller::class, 'getCategories']);
+
+
 });
