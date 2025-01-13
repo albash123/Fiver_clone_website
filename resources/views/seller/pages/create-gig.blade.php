@@ -1,6 +1,5 @@
 <x-layout>
-    <x-nav />
-    <x-sidebar />
+
 
     <style>
         body {
@@ -120,33 +119,38 @@
             border: 1px solid rgba(228, 229, 231, 0.6);
         }
     </style>
+    <x-nav />
+    <x-sidebar />
 
 
     <div class="container-fluid ">
         <div class="form-container shadow-lg">
-            <form action="" method="post" enctype="multipart/form-data">
+            <form action="/seller/add-gig" method="post" enctype="multipart/form-data">
+                @csrf
                 <div class="row">
                     <div class="col-lg-6"> <!-- Overview Section -->
                         <section>
                             <h2 class="section-title">Overview</h2>
 
                             <div class="mb-4">
-                                <label class="form-label">Gig Title</label>
-                                <input type="text" class="form-control"
-                                    value="I will do marketing design for your business">
+                                <label for="gigTitle" class="form-label">Gig Title</label>
+                                <input name="title" type="text" class="form-control"
+                                    placeholder="I will do marketing design for your business">
                             </div>
 
                             <div class="mb-4">
-                                <label class="form-label">Category</label>
-                                <select class="form-select form-control">
+                                <label for='category' class="form-label">Category</label>
+                                <select name="category" class="form-select form-control" id="category">
                                     @foreach ($categories as $item)
-                                        <option value="{{ $item->name }}">{{ $item->name }}</option>
+                                        <option value="{{ $item->id }}">{{ $item->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
 
-                            <div class="mb-4 ">
+                            <div class="mb-4">
                                 <label class="form-label">Platform Type</label>
+                                <div class="types"></div>
+                                <x-loader />
                                 {{-- <div class="platform-type p-4">
                                     <div class="form-check">
                                         <input class="form-check-input" type="checkbox" id="facebook">
@@ -172,11 +176,11 @@
                                 <h2 class="section-title">Description & FAQ</h2>
                                 <div class="mb-4">
                                     <label class="form-label">Description</label>
-                                    <textarea class="form-control" rows="3" placeholder="Write a detailed description of your gig"></textarea>
+                                    <textarea name='desc' class="form-control" rows="3" placeholder="Write a detailed description of your gig"></textarea>
                                 </div>
                                 <div class="mb-4">
                                     <label class="form-label">FAQ</label>
-                                    <textarea class="form-control" rows="2" placeholder="Add frequently asked questions"></textarea>
+                                    <textarea name='faq' class="form-control" rows="2" placeholder="Add frequently asked questions"></textarea>
                                 </div>
                             </section>
                         </section>
@@ -187,17 +191,17 @@
                             <h2 class="section-title">Pricing</h2>
                             <div class="mb-4">
                                 <label class="form-label">Basic Package</label>
-                                <input type="text" class="form-control package-input"
+                                <input name="base_package" type="text" class="form-control package-input"
                                     placeholder="Enter basic package price">
                             </div>
                             <div class="mb-4">
                                 <label class="form-label">Standard Package</label>
-                                <input type="text" class="form-control package-input"
+                                <input name='standard_package' type="text" class="form-control package-input"
                                     placeholder="Enter standard package price">
                             </div>
                             <div class="mb-4">
                                 <label class="form-label">Premium Package</label>
-                                <input type="text" class="form-control package-input"
+                                <input name='premium_package' type="text" class="form-control package-input"
                                     placeholder="Enter premium package price">
                             </div>
                             <!-- Gallery Section -->
@@ -206,8 +210,8 @@
                                 <div class="mb-4">
                                     <label class="form-label">Upload Images</label>
                                     <div class="file-upload">
-                                        <input type="file" class="form-control" id="gallery-upload" multiple
-                                            accept="image/*">
+                                        <input name="images" type="file" class="form-control" id="gallery-upload"
+                                            multiple accept="image/*">
                                         <p class="text-muted mt-3 mb-0">Drag and drop your images here or click to
                                             browse
                                         </p>
@@ -219,7 +223,7 @@
                                 <div class="mb-4">
                                     <label class="form-label">Upload search tags</label>
                                     <div class="">
-                                        <input type="text" class="form-control package-input"
+                                        <input name="tags" type="text" class="form-control package-input"
                                             placeholder="search tags">
 
                                     </div>
@@ -240,9 +244,49 @@
 
         </div>
     </div>
+    <x-jquery />
 
     <script>
-      
+        $('#category').on('change', function() {
+            let option = $(this).val();
+            let _token = $('meta[name="csrf-token"]').attr('content');
+            console.log(_token); // Corrected here, use _token
+
+            $.ajax({
+                url: '/seller/get-relevent-values',
+                type: 'POST',
+                data: {
+                    option,
+                    _token
+                },
+
+                beforeSend: function() {
+                    $('.skeleton-loader').removeClass('d-none')
+                    $('.types').addClass('d-none')
+                },
+                success: function(response) {
+                    console.log(response);
+                    let data = ''
+                    response.forEach(function(item, index) {
+                        data += `<div class="form-check">
+                            
+                            <input value="${item}" name='category_values' class="form-check-input" type="checkbox"  id="checkbox-${index}">
+                            
+                            <label class="form-check-label" for="checkbox-${index}">${item}</label>
+
+                                </div>`
+                    })
+                    $('.types').removeClass('d-none')
+                    $('.types').html(data)
+                    $('.skeleton-loader').addClass('d-none')
+
+
+                },
+                error: function(xhr) {
+                    console.log(xhr);
+                }
+            });
+        });
     </script>
 
 </x-layout>
