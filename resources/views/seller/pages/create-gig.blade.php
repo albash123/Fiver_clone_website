@@ -121,6 +121,7 @@
     </style>
     <x-nav />
     <x-sidebar />
+    <x-popup />
 
 
     <div class="container-fluid ">
@@ -136,6 +137,12 @@
                                 <label for="gigTitle" class="form-label">Gig Title</label>
                                 <input name="title" type="text" class="form-control"
                                     placeholder="I will do marketing design for your business">
+                                value="{{ old('title') }}">
+                                @error('title')
+                                    <p class="text-danger fw-semibold">
+                                        {{ $message }}
+                                    </p>
+                                @enderror
                             </div>
 
                             <div class="mb-4">
@@ -145,6 +152,11 @@
                                         <option value="{{ $item->id }}">{{ $item->name }}</option>
                                     @endforeach
                                 </select>
+                                @error('category')
+                                    <p class="text-danger fw-semibold">
+                                        {{ $message }}
+                                    </p>
+                                @enderror
                             </div>
 
                             <div class="mb-4">
@@ -166,21 +178,34 @@
                                     </div>
 
                                 </div> --}}
+                                @error('category_values')
+                                    <p class="text-danger fw-semibold">
+                                        {{ $message }}
+                                    </p>
+                                @enderror
                             </div>
 
-                            <div class="mb-4">
-                                <label class="form-label">Search Tags</label>
-                                <input type="text" class="form-control" placeholder="Enter tags separated by commas">
-                            </div>
+
                             <section>
                                 <h2 class="section-title">Description & FAQ</h2>
                                 <div class="mb-4">
                                     <label class="form-label">Description</label>
                                     <textarea name='desc' class="form-control" rows="3" placeholder="Write a detailed description of your gig"></textarea>
+                                    @error('desc')
+                                        <p class="text-danger fw-semibold">
+                                            {{ $message }}
+                                        </p>
+                                    @enderror
                                 </div>
                                 <div class="mb-4">
                                     <label class="form-label">FAQ</label>
+
                                     <textarea name='faq' class="form-control" rows="2" placeholder="Add frequently asked questions"></textarea>
+                                    @error('faq')
+                                        <p class="text-danger fw-semibold">
+                                            {{ $message }}
+                                        </p>
+                                    @enderror
                                 </div>
                             </section>
                         </section>
@@ -193,16 +218,31 @@
                                 <label class="form-label">Basic Package</label>
                                 <input name="base_package" type="text" class="form-control package-input"
                                     placeholder="Enter basic package price">
+                                @error('base_package')
+                                    <p class="text-danger fw-semibold">
+                                        {{ $message }}
+                                    </p>
+                                @enderror
                             </div>
                             <div class="mb-4">
                                 <label class="form-label">Standard Package</label>
                                 <input name='standard_package' type="text" class="form-control package-input"
                                     placeholder="Enter standard package price">
+                                @error('standard_package')
+                                    <p class="text-danger fw-semibold">
+                                        {{ $message }}
+                                    </p>
+                                @enderror
                             </div>
                             <div class="mb-4">
                                 <label class="form-label">Premium Package</label>
                                 <input name='premium_package' type="text" class="form-control package-input"
                                     placeholder="Enter premium package price">
+                                @error('premium_package')
+                                    <p class="text-danger fw-semibold">
+                                        {{ $message }}
+                                    </p>
+                                @enderror
                             </div>
                             <!-- Gallery Section -->
                             <section>
@@ -215,6 +255,11 @@
                                         <p class="text-muted mt-3 mb-0">Drag and drop your images here or click to
                                             browse
                                         </p>
+                                        @error('images')
+                                            <p class="text-danger fw-semibold">
+                                                {{ $message }}
+                                            </p>
+                                        @enderror
                                     </div>
                                 </div>
                             </section>
@@ -225,6 +270,11 @@
                                     <div class="">
                                         <input name="tags" type="text" class="form-control package-input"
                                             placeholder="search tags">
+                                        @error('tags')
+                                            <p class="text-danger fw-semibold">
+                                                {{ $message }}
+                                            </p>
+                                        @enderror
 
                                     </div>
                                 </div>
@@ -234,7 +284,7 @@
                 </div>
                 <!-- Save Button -->
                 <div class="d-grid">
-                    <button type="submit" class="btn btn-primary ">Save & Continue</button>
+                    <button type="button" class="btn add-gig btn-primary ">Save & Continue</button>
                 </div>
 
             </form>
@@ -270,7 +320,7 @@
                     response.forEach(function(item, index) {
                         data += `<div class="form-check">
                             
-                            <input value="${item}" name='category_values' class="form-check-input" type="checkbox"  id="checkbox-${index}">
+                            <input value="${item}" name='category_values[]' class="form-check-input" type="checkbox"  id="checkbox-${index}">
                             
                             <label class="form-check-label" for="checkbox-${index}">${item}</label>
 
@@ -284,6 +334,60 @@
                 },
                 error: function(xhr) {
                     console.log(xhr);
+                }
+            });
+        });
+
+
+        // add gig
+
+        $('.add-gig').on('click', function() {
+            // Retrieve CSRF token
+            let _token = $('meta[name="csrf-token"]').attr('content');
+            let btn = $(this)
+            // Create a new FormData object
+            let formData = new FormData();
+            formData.append('_token', _token);
+            formData.append('title', $('input[name="title"]').val());
+            formData.append('category', $('select[name="category"]').val());
+            formData.append('desc', $('textarea[name="desc"]').val());
+            formData.append('faq', $('textarea[name="faq"]').val());
+            formData.append('base_package', $('input[name="base_package"]').val());
+            formData.append('standard_package', $('input[name="standard_package"]').val());
+            formData.append('premium_package', $('input[name="premium_package"]').val());
+            formData.append('images', $('input[name="images"]')[0].files[0]); // File input handling
+            formData.append('tags', $('input[name="tags"]').val());
+
+            // Add category values as an array
+            $('input[name="category_values[]"]:checked').each(function() {
+                formData.append('category_values[]', $(this).val());
+            });
+
+            // AJAX Request
+            $.ajax({
+                url: '/seller/add-gig',
+                type: 'POST',
+                contentType: false, // Required for FormData
+                processData: false, // Required for FormData
+                data: formData,
+                beforeSend: function() {
+                    btn.html(`<div class="spinner-border" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                            </div>`)
+                },
+                success: function(response) {
+                    console.log('Success:', response);
+                    $('.notification').css('transform', 'translateY(0)')
+                    $('.notification').html('Gig inserted successfully!')
+                    setTimeout(() => {
+                        $('.notification').css('transform', 'translateY(300px)')
+
+                    }, 5000);
+                    $('.form')[0].reset()
+                    btn.html('Save & Continue')
+                },
+                error: function(xhr) {
+                    console.error('Error:', xhr.responseText);
                 }
             });
         });

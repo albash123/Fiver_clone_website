@@ -63,4 +63,19 @@ class GigController extends Controller
 
         // return back()->with('message', 'Gig created successfully!');
     }
+
+    public function getGigs()
+    {
+        $gigs = Gig::all(); // Get all the gigs from the database
+
+        return view('welcome', compact('gigs')); // Pass the gigs data to the view
+    }
+
+
+
+    public function getSingleGig($id)
+    {
+        $findGig = Gig::find($id);
+        return response()->json($findGig);
+    }
 }

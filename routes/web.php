@@ -3,6 +3,9 @@
 use App\Http\Controllers\Gigcontroller;
 use Illuminate\Support\Facades\Route;
 
+Route::get('/', [GigController::class, 'getGigs']);
+
+
 Route::view('/', 'welcome')->name('home');
 
 Route::prefix('seller')->group(function () {
