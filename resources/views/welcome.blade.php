@@ -130,7 +130,7 @@
                                     (24)
                                 </span>
                             </div>
-                            <h6>From $135</h6>
+                            <h6>From $134</h6>
                         </div>
                     </a>
                 </div>

@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [GigController::class, 'getGigs']);
 
 
-Route::view('/', 'welcome')->name('home');
+//Route::view('/', 'welcome')->name('home');
 
 Route::prefix('seller')->group(function () {
     Route::view('/dashboard', 'seller.pages.dashboard')->name('seller-dashboard');
