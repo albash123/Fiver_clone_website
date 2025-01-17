@@ -13,10 +13,14 @@ Route::prefix('seller')->group(function () {
     Route::view('/gigs', 'seller.pages.gigs')->name('seller-gigs');
     Route::view('/create-gig', 'seller.pages.create-gig')->name('seller-add-gigs');
 
+    Route::view('/single-gig/{id}', 'seller.pages.single-gig');
+
+
 
     //get routes
 
     Route::get('/create-gig', [Gigcontroller::class, 'getCategories']);
+    Route::get('/get-single-gig/{id}', [Gigcontroller::class, 'getsingleGig']); //get single gig
 
     //post routes
     Route::post('/get-relevent-values', [Gigcontroller::class, 'getReleventValues']);
