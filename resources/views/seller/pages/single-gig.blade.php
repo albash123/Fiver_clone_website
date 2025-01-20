@@ -2,6 +2,7 @@
     <x-nav />
     <hr>
     @include('seller.partials.skeleton')
+    @include('seller.partials.continue-menu')
 
     <div class="container mt-5 gig-content d-none">
         <div class="row">
