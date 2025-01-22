@@ -10,7 +10,7 @@
             <div class="col-lg-8 col-md-6">
                 <img src="" alt="Cartoon Caricature" class="mx-auto d-block gig-image rounded">
             </div>
-            <h1>heoncp</h1>
+            <h1>heonc</h1>
             <!-- Details Section -->
             <div class="col-lg-4 col-md-6">
                 <h1 class="title">I will draw cartoon caricature for you</h1>
